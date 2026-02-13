@@ -1,20 +1,21 @@
 import React from "react";
-
 function FoodCard({ item }) {
   return (
-    <div className="bg-white shadow-md rounded-xl p-4 hover:shadow-xl transition">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
       <img
         src={item.img}
         alt={item.name}
-        className="w-full h-32 object-cover rounded-lg mb-3"
+        className="w-full h-40 object-cover"
       />
 
-      <h3 className="font-semibold text-lg">{item.name}</h3>
-      <p className="text-indigo-600 font-bold">₹{item.price}</p>
+      <div className="p-4 flex flex-col gap-2">
+        <h3 className="font-semibold text-lg">{item.name}</h3>
+        <p className="text-gray-600">₹ {item.price}</p>
 
-      <button className="mt-2 w-full bg-indigo-600 text-white py-1 rounded-lg hover:bg-indigo-500">
-        Add to Cart
-      </button>
+        <button className="bg-black text-white rounded-lg py-2 hover:bg-gray-800">
+          Add to Cart
+        </button>
+      </div>
     </div>
   );
 }
