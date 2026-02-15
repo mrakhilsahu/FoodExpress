@@ -1,3 +1,4 @@
+import React from "react";
 import { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
@@ -6,20 +7,22 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   // ADD ITEM
-  const addToCart = (food) => {
-    const newCart = [...cart];
+  const addItem = (food) => {
+  const existingItem = cart.find((item) => item.id === food.id);
 
-    const index = newCart.findIndex((item) => item.id === food.id);
+  if (existingItem) {
+    const updatedCart = cart.map((item) =>
+      item.id === food.id
+        ? { ...item, quantity: (item.quantity || 1) + 1 }
+        : item
+    );
 
-    if (index !== -1) {
-      newCart[index].qty += 1;
-    } else {
-      newCart.push({ ...food, qty: 1 });
-    }
-
-    setCart(newCart);
-  };
-
+    setCart(updatedCart);
+  } else {
+    setCart([...cart, { ...food, quantity: 1 }]);
+  }
+};
+ 
   // REMOVE ITEM
   const removeFromCart = (id) => {
     const newCart = cart.filter((item) => item.id !== id);
@@ -39,7 +42,7 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, totalItems }}
+      value={{ cart, addItem, removeFromCart, totalItems }}
     >
       {children}
     </CartContext.Provider>

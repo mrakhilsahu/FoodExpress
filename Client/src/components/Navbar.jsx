@@ -1,13 +1,34 @@
+import React from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 function Navbar() {
+  const { cart } = useCart();
+
   return (
-    <nav className="bg-white shadow-md py-4 px-8 flex justify-between items-center">
-      <h2 className="text-xl font-bold text-indigo-600">🍔 FoodExpress</h2>
-      <div className="flex gap-6 text-gray-700 font-medium">
-        <Link to="/" className="hover:text-indigo-500">Home</Link>
-        <Link to="/cart" className="hover:text-indigo-500">Cart</Link>
-        <Link to="/login" className="hover:text-indigo-500">Login</Link>
+    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+      
+      {/* Logo */}
+      <Link to="/" className="text-xl font-bold">
+        FoodApp
+      </Link>
+      <div className="flex items-center gap-6">
+
+        <Link to="/" className="hover:text-gray-600">
+          Home
+        </Link>
+
+        {/* Cart with Badge */}
+        <Link to="/cart" className="relative hover:text-gray-600">
+          Cart
+
+          {cart.length > 0 && (
+            <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+              {cart.length}
+            </span>
+          )}
+        </Link>
+
       </div>
     </nav>
   );
